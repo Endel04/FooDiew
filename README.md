@@ -33,4 +33,6 @@
    16. get_absolute_url() in Bookmark
    17. bookmark/views BookmarkDeleteView
    18. bookmark/urls bookmark:delete
-   19. templates bookmark_delete.html
+   19. templates bookmark_confirm_delete.html
+4. ✌ 기능 완성 ✌
+   1. templates/base.html, extends 'base.html', block title, content
