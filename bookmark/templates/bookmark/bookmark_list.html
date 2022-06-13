@@ -5,8 +5,13 @@
 {% block content %}
 
 <div class="btn-group">
-    <a href="{% url 'bookmark:add' %}" class="btn btn-info">AddBookmark</a>
-    <a href="{% url 'accounts:register' %}" class="btn btn-warning">Register</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'bookmark:add' %}" class="btn btn-info">AddBookmark</a>
+        <a href="{% url 'accounts:logout' %}" class="btn btn-danger">Logout</a>
+    {% else %}
+        <a href="{% url 'accounts:register' %}" class="btn btn-warning">Register</a>
+        <a href="{% url 'accounts:login' %}" class="btn btn-primary">Login</a>
+    {% endif %}
 </div>
 
 <table class="table">
@@ -26,7 +31,7 @@
         <td>{{ forloop.counter }}</td>
         <td><a href="{% url 'bookmark:detail' pk=bookmark.id %}">{{ bookmark.name }}</a></td>
         <td><a href="{{ bookmark.url }}">{{ bookmark.url }}</a></td>
-        <td><a href="{% url 'bookmark:edit' pk=bookmark.pk %}" class="btn btn-warning btn-sm">Edit</a></td>
+        <td><a href="{% url 'bookmark:edit' pk=bookmark.pk %}" class="btn btn-primary btn-sm">Edit</a></td>
         <td><a href="{% url 'bookmark:delete' pk=bookmark.pk %}" class="btn btn-danger btn-sm">Delete</a></td>
     </tr>
     {% endfor %}
