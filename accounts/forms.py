@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.forms import models
+
 from accounts.models import Profile
 from django.contrib.auth.forms import UserCreationForm
 
@@ -20,3 +23,11 @@ class RegisterForm(UserCreationForm):
             nickname=self.cleaned_data.get('nickname'),  # self.cleaned_data['nickname']
         )
         return new_profile
+
+
+class LoginForm(models.ModelForm):
+    password = forms.CharField(label='패스워드', widget=forms.PasswordInput)
+    
+    class Meta:
+        model = User
+        fields = ('username', 'password')
