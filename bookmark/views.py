@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -15,12 +16,13 @@ class BookmarkListView(ListView):
             # user -> profile -> bookmark_list
             profile = Profile.objects.get(user=user)  # user-> profile
             bookmark_list = Bookmark.objects.filter(profile=profile)  # profile -> bookmark_list
-        else:  # 로그인 안 하면 북마크 보여주지 않기
-            bookmark_list = Bookmark.objects.none()
+        else:  # 로그인 안 하면
+            bookmark_list = Bookmark.objects.all()  # 북마크 다 보여주기
+            bookmark_list = Bookmark.objects.none()  # 북마크 보여주지 않기
         return bookmark_list
 
 
-class BookmarkCreateView(CreateView):
+class BookmarkCreateView(LoginRequiredMixin, CreateView):
     model = Bookmark
     fields = ['profile', 'name', 'url']  #'__all__'
     template_name_suffix = '_create'    #bookmark_from.html -> bookmark_create.html
