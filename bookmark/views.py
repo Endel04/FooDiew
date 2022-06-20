@@ -35,11 +35,11 @@ class BookmarkCreateView(LoginRequiredMixin, CreateView):
         return {'profile': profile}
 
 
-class BookmarkDetailView(DetailView):
+class BookmarkDetailView(LoginRequiredMixin, DetailView):
     model = Bookmark
 
 
-class BookmarkUpdateView(UpdateView):
+class BookmarkUpdateView(LoginRequiredMixin, UpdateView):
     model = Bookmark
     fields = ['name', 'url']  # '__all__'
     template_name_suffix = '_update'  # bookmark_update.html
@@ -47,6 +47,18 @@ class BookmarkUpdateView(UpdateView):
     # success_url이 없으면 model의 get_absolute_url() 호출
 
 
-class BookmarkDeleteView(DeleteView):
+class BookmarkDeleteView(LoginRequiredMixin, DeleteView):
     model = Bookmark
     success_url = reverse_lazy('bookmark:list')
+
+
+def list_bookmark(request):
+    # 로그인 사용자 확인하기
+    user = request.user
+
+    if user.is_authenticated:  # 로그인 됐으면
+        profile = Profile.objects.get(user=user)
+        bookmark_list = Bookmark.objects.filter(profile=profile)  # 사용자의 북마크 가져오기
+    else:  # 로그인 안 됐으면
+        bookmark_list = Bookmark.objects.none() # 비어있는 새 북마크 리스트 가져오기
+    return render(request, 'bookmark/bookmark_list.html', {'bookmark_list': bookmark_list})
