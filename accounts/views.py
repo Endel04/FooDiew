@@ -11,9 +11,8 @@ def register(request):
         if form.is_valid():
             profile = form.save()
             return render(request, 'accounts/register_done.html', {'profile': profile})
-    else:  # 처음 비어있는 폼 화면ㄴ
+    else:  # 처음 비어있는 폼 화면
         form = RegisterForm()
-        return render(request, 'accounts/login_fail.html', {'form': form})
     return render(request, 'accounts/register.html', {'form': form})
 
 

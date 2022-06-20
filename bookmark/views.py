@@ -62,3 +62,8 @@ def list_bookmark(request):
     else:  # 로그인 안 됐으면
         bookmark_list = Bookmark.objects.none() # 비어있는 새 북마크 리스트 가져오기
     return render(request, 'bookmark/bookmark_list.html', {'bookmark_list': bookmark_list})
+
+
+def detail_bookmark(request, pk):
+    bookmark = Bookmark.objects.get(pk=pk)
+    return render(request, 'bookmark/bookmark_detail.html', {'bookmark': bookmark})
