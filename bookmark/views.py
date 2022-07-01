@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -81,13 +82,14 @@ def delete_bookmark(request, pk):
         return render(request, 'bookmark/bookmark_confirm_delete.html', {'bookmark': bookmark})
 
 
+@login_required
 def create_bookmark(request):
     if request.method == 'POST':  # 사용자가 입력하고 버튼을 클릭했을 때
         form = BookmarkCreationForm(request.POST)  # form 가져오기
 
         if form.is_valid():  # is_valid()
-            new_bookmark = form.sace(commit=False)  # new_bookmark 생성하기(name, url)
-            new_profile = Profile.objects.get(user=request.user)  # new_bookmark에 profile 추가하기
+            new_bookmark = form.save(commit=False)  # new_bookmark 생성하기(name, url)
+            new_bookmark.profile = Profile.objects.get(user=request.user)  # new_bookmark에 profile 추가하기
             new_bookmark.save()
             return redirect('bookmark:list')  # bookmark:list 이동하기
     else:  # 비어있는 폼
