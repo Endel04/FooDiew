@@ -14,13 +14,13 @@ class RegisterForm(UserCreationForm):
     nickname = forms.CharField(label='별명')
 
     class Meta(UserCreationForm.Meta):
-        fields = UserCreationForm.Meta.fields + ('email',)  # ('username', 'email',)
+        fields = UserCreationForm.Meta.fields + ('email',)
 
     def save(self):
         user = super().save()
         new_profile = Profile.objects.create(
             user=user,
-            nickname=self.cleaned_data.get('nickname'),  # self.cleaned_data['nickname']
+            nickname=self.cleaned_data.get('nickname'),
         )
         return new_profile
 

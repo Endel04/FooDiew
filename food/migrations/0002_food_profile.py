@@ -8,12 +8,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('accounts', '0001_initial'),
-        ('bookmark', '0001_initial'),
+        ('food', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='bookmark',
+            model_name='food',
             name='profile',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='accounts.profile'),
         ),

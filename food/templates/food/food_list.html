@@ -6,7 +6,7 @@
 
 <div class="btn-group">
     {% if user.is_authenticated %}
-        <a href="{% url 'bookmark:add' %}" class="btn btn-info">AddBookmark</a>
+        <a href="{% url 'food:add' %}" class="btn btn-info">AddBookmark</a>
         <a href="{% url 'accounts:logout' %}" class="btn btn-danger">Logout</a>
     {% else %}
         <a href="{% url 'accounts:register' %}" class="btn btn-warning">Register</a>
@@ -29,10 +29,10 @@
     {% for bookmark in bookmark_list %}
     <tr>
         <td>{{ forloop.counter }}</td>
-        <td><a href="{% url 'bookmark:detail' pk=bookmark.id %}">{{ bookmark.name }}</a></td>
+        <td><a href="{% url 'food:detail' pk=bookmark.id %}">{{ bookmark.name }}</a></td>
         <td><a href="{{ bookmark.url }}">{{ bookmark.url }}</a></td>
-        <td><a href="{% url 'bookmark:edit' pk=bookmark.pk %}" class="btn btn-primary btn-sm">Edit</a></td>
-        <td><a href="{% url 'bookmark:delete' pk=bookmark.pk %}" class="btn btn-danger btn-sm">Delete</a></td>
+        <td><a href="{% url 'food:edit' pk=bookmark.pk %}" class="btn btn-primary btn-sm">Edit</a></td>
+        <td><a href="{% url 'food:delete' pk=bookmark.pk %}" class="btn btn-danger btn-sm">Delete</a></td>
     </tr>
     {% endfor %}
     </tbody>

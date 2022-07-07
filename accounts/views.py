@@ -6,12 +6,12 @@ from accounts.forms import RegisterForm, LoginForm
 
 
 def register(request):
-    if request.method == 'POST':  # 정보를 입력하고 POST로 넘겼을 때
+    if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             profile = form.save()
             return render(request, 'accounts/register_done.html', {'profile': profile})
-    else:  # 처음 비어있는 폼 화면
+    else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})
 
@@ -25,7 +25,7 @@ def my_login(request):
 
         if user is not None:
             login(request, user)
-            return redirect(request.GET.get(REDIRECT_FIELD_NAME) or 'bookmark:list')
+            return redirect(request.GET.get(REDIRECT_FIELD_NAME) or 'food:list')
         else:
             return render(request, 'accounts/login_fail.html')
     else:
@@ -36,4 +36,4 @@ def my_login(request):
 @login_required
 def my_logout(request):
     logout(request)
-    return redirect('bookmark:list')
+    return redirect('food:list')

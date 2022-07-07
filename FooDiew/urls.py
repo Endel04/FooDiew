@@ -1,4 +1,4 @@
-"""DBookmark URL Configuration
+"""FooDiew URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -18,14 +18,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-import bookmark
-from bookmark import views
-from bookmark.views import BookmarkListView
+import food
+from food import views
+from food.views import FoodListView
 
 urlpatterns = [
-    # path('', BookmarkListView.as_view(), name='home'),
-    path('', bookmark.views.list_bookmark, name='home'),
-    path('bookmark/', include('bookmark.urls')),
+    path('', food.views.list_food, name='home'),
+    path('food/', include('food.urls')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
 ]
